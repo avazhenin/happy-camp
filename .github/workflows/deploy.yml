@@ -22,7 +22,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: yourusername/yourapp:latest
+        tags: vazhenina/happycamp:latest
 
     - name: SSH and deploy to Linode
       uses: appleboy/ssh-action@master
@@ -31,7 +31,7 @@ jobs:
         username: ${{ secrets.LINODE_USERNAME }}
         key: ${{ secrets.LINODE_SSH_KEY }}
         script: |
-          docker pull yourusername/yourapp:latest
+          docker pull avazhenin/yourapp:latest
           docker stop myapp || true
           docker rm myapp || true
           docker run -d --name myapp -p 80:80 yourusername/yourapp:latest
