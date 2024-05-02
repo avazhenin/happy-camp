@@ -31,7 +31,7 @@ jobs:
         username: ${{ secrets.LINODE_USERNAME }}
         key: ${{ secrets.LINODE_SSH_KEY }}
         script: |
-          docker pull avazhenin/yourapp:latest
-          docker stop myapp || true
-          docker rm myapp || true
-          docker run -d --name myapp -p 80:80 yourusername/yourapp:latest
+          docker pull vazhenina/happycamp:latest
+          docker stop happycamp || true
+          docker rm happycamp || true
+          docker run -d --name happycamp -p 80:80 vazhenina/happycamp:latest
