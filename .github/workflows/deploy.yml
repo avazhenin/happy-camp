@@ -36,4 +36,4 @@ jobs:
           docker pull vazhenina/happycamp:latest
           docker stop happycamp || true
           docker rm happycamp || true
-          docker run -d --name happycamp -p 80:80 vazhenina/happycamp:latest
+          docker run -d --name happycamp -p 3000:3000 vazhenina/happycamp:latest
