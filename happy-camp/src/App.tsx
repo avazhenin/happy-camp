@@ -1,9 +1,8 @@
-import UnderConstruction from './UnderConstruction';
 
 function App() {
   return (
     <>
-      <UnderConstruction />
+      <div>123</div>
     </>
   );
 }
