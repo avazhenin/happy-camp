@@ -21,6 +21,8 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v2
       with:
+        context: ./happy-camp
+        file: ./happy-camp/Dockerfile      
         push: true
         tags: vazhenina/happycamp:latest
 
