@@ -1,0 +1,49 @@
+services:
+
+  database:
+    container_name: database
+    image: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - ./db/init.sh:/docker-entrypoint-initdb.d/initdb.sh
+      - happycamp_pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - happycamp_network
+    restart: unless-stopped
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:25.0.5
+    container_name: keycloak
+    platform: linux/arm64
+    environment:
+      KC_LOG_LEVEL: debug
+      KC_DB: postgres
+      KC_DB_URL: 'jdbc:postgresql://database/${POSTGRES_DB}'
+      KC_DB_USERNAME: ${POSTGRES_USER}
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      KC_DB_SCHEMA: ${KEYCLOAK_DB_SCHEMA}
+      KC_HOSTNAME: localhost
+      KC_HTTP_ENABLED: true
+      HTTP_ADDRESS_FORWARDING: true
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN_USR}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PWD}
+    command: start-dev
+    ports:
+      - 8082:8080
+    depends_on:
+      - database
+    networks:
+      - happycamp_network
+
+networks:
+  happycamp_network:
+    driver: bridge
+    name: happycamp_network
+volumes:
+  happycamp_pgdata:
